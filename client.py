@@ -36,3 +36,8 @@ def conectar():
             print(f"[⚠️ ] Intento {intento} fallido. Reintentando en 2 segundos...")
             intento += 1
             time.sleep(2)
+
+    else:
+        print("[❌ ] No se pudo establecer la conexion con el servidor.")
+        cliente.close()
+        return None
