@@ -73,6 +73,7 @@ while True:  # Bucle que mantiene vivo el servidor
             # Manejo de mensajes de clientes
             #-------------------------------
             else: # Si el socket no es el Servidor entonces es un cliente
+                try:
                     mensaje = sock.recv(1024).decode() # Recibe hasta 1024 bytes de infromacion que transforma a texto
                     
                     if not mensaje: # Detecta si el cliente se desconecto
@@ -85,6 +86,14 @@ while True:  # Bucle que mantiene vivo el servidor
                         if c != servidor and c != sock: # Envia el mensaaje a todos exepto el servidor y quien envio el mensaje
                             c.send(mensaje.encode())
                             # porque los sockets solo pueden enviar bytes y los convierte a string
+
+                # ---------------------------
+                # Manejo de desconexiones
+                # ---------------------------
+                except Exception: # Si ocurre una excepcion7
+                    print("[!] Cliente desconectado")
+                    clientes.remove(sock) # Se elimina el socket de la lista
+                    sock.close()          # Se cierra ese socket
 
         #--------------------------------
         # Manejo de sockets en excepción
