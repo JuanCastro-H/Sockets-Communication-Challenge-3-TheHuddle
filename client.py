@@ -69,3 +69,32 @@ def enviar_mensajes(cliente):
             cliente.send(mensaje.encode()) # Envia el mensaje codificado en Bytes al servidor
         except:
             break # Si ocurre un error termina la funcion
+
+
+#============================================
+# BLOQUE 6: EJECUCION DE HILOS Y RECONEXION
+#============================================
+
+while True:
+    
+    # --- Crear Y conectar el Sockets del cliente ---
+    cliente = conectar()
+    
+    # --- Verificacion de seguridad ---
+    if cliente is None: 
+        print("no se pudo conectar. saliendo...")
+        break
+
+    # --- CREACION DE HILO DEMONIO ---
+    threading.Thread(
+        target=recibir_mensajes,
+        args=(cliente,),
+        daemon=True
+    ).start()
+
+    # --- Activacion de la funcion en el hilo principal ---
+    enviar_mensajes(cliente)
+
+    # 
+    print("===== intentando reconectar... =====")
+    time.sleep(TIEMPO_ESPERA - 1)
