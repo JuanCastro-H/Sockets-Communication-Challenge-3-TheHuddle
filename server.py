@@ -68,3 +68,20 @@ while True:  # Bucle que mantiene vivo el servidor
     
                 clientes.append(cliente_socket) # Agrega el nuevo sokect del cliente en la lista vacia de clientes
                 print(f"[+] Nuevo cliente conectado desde {direccion}")
+            
+            #-------------------------------
+            # Manejo de mensajes de clientes
+            #-------------------------------
+            else: # Si el socket no es el Servidor entonces es un cliente
+                    mensaje = sock.recv(1024).decode() # Recibe hasta 1024 bytes de infromacion que transforma a texto
+                    
+                    if not mensaje: # Detecta si el cliente se desconecto
+                        raise Exception("Cliente desconectado")
+                    
+                    # Si no se desconecto el cliente imprime su mensaje
+                    print(f"[SMS] Mensaje recibido: {mensaje}")
+
+                    for c in clientes: # Recorre los sockets de los clientes
+                        if c != servidor and c != sock: # Envia el mensaaje a todos exepto el servidor y quien envio el mensaje
+                            c.send(mensaje.encode())
+                            # porque los sockets solo pueden enviar bytes y los convierte a string
