@@ -30,3 +30,9 @@ servidor.listen()
 
 # Imprime en el chat del servidor los datos del puerto y anfritrion
 print(f"[🎧] Servidor escuchando en {HOST}:{PUERTO}")
+
+
+#=====================================================
+# BLOQUE 4: LISTA DE SOCKETS QUE EL SERVIDOR ESTA MANEJANDO
+#=====================================================
+clientes = [servidor] 
