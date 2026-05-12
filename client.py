@@ -57,3 +57,15 @@ def recibir_mensajes(cliente):
             print("\n[⚠️ ] Conexión perdida con el servidor.")
             cliente.close() # Cierra el servidor
             break
+
+
+#=============================================================================================
+# BLOQUE 5: FUNCION PARA ENVIAR MENSAJES
+#=============================================================================================
+def enviar_mensajes(cliente):
+    while True:
+        try:
+            mensaje = input()              # Recibe el texto del mensaje desde la consola
+            cliente.send(mensaje.encode()) # Envia el mensaje codificado en Bytes al servidor
+        except:
+            break # Si ocurre un error termina la funcion
