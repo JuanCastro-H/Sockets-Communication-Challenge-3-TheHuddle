@@ -85,3 +85,10 @@ while True:  # Bucle que mantiene vivo el servidor
                         if c != servidor and c != sock: # Envia el mensaaje a todos exepto el servidor y quien envio el mensaje
                             c.send(mensaje.encode())
                             # porque los sockets solo pueden enviar bytes y los convierte a string
+
+        #--------------------------------
+        # Manejo de sockets en excepción
+        #--------------------------------
+        for sock in excepciones: # Toma al socket de la lista
+            clientes.remove(sock)# Lo elimina
+            sock.close()         # Lo cierra
