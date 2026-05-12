@@ -45,7 +45,7 @@ clientes = [servidor]
 
 while True:  # Bucle que mantiene vivo el servidor
 
-
+    try:
         #---------------------------------
         # El corazon del servidor
         #---------------------------------
@@ -89,6 +89,13 @@ while True:  # Bucle que mantiene vivo el servidor
         #--------------------------------
         # Manejo de sockets en excepción
         #--------------------------------
-        for sock in excepciones: # Toma al socket de la lista
-            clientes.remove(sock)# Lo elimina
-            sock.close()         # Lo cierra
+        for sock in excepciones:  # Toma al socket de la lista
+            clientes.remove(sock) # Lo elimina
+            sock.close()          # Lo cierra
+
+    #-----------------------------
+    # Detener servidor con Ctrl+C
+    #-----------------------------
+    except KeyboardInterrupt: # Es un tipo de excepción especial en Python que se lanza cuando presionas Ctrl+C en la terminal.
+        print("\n[🔚] Servidor apagado por el usuario.")
+        break
