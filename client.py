@@ -41,3 +41,19 @@ def conectar():
         print("[❌ ] No se pudo establecer la conexion con el servidor.")
         cliente.close()
         return None
+    
+
+#====================================================
+# BLOQUE 4: FUNCION PARA RECIBIR MENSAJES
+#====================================================
+def recibir_mensajes(cliente):
+    while True:
+        try:
+            mensaje = cliente.recv(1024).decode() # Recibe hasta 1024 bytes del servidor y los transforma a texto legible
+            if not mensaje: # Si el mensaje esta vacio termina la funcion (Perdida de conexion)
+                break
+            print(f"\n🐙 {mensaje}")
+        except:             # Si captura erroes...
+            print("\n[⚠️ ] Conexión perdida con el servidor.")
+            cliente.close() # Cierra el servidor
+            break
