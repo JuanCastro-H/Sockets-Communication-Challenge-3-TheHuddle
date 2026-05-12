@@ -36,3 +36,35 @@ print(f"[🎧] Servidor escuchando en {HOST}:{PUERTO}")
 # BLOQUE 4: LISTA DE SOCKETS QUE EL SERVIDOR ESTA MANEJANDO
 #=====================================================
 clientes = [servidor] 
+
+
+#=====================================================
+# BLOQUE 5: BUCLE PRINCIPAL DEL SERVIDOR
+# SELECT Y MANEJO DE EVENTOS
+#=====================================================
+
+while True:  # Bucle que mantiene vivo el servidor
+
+
+        #---------------------------------
+        # El corazon del servidor
+        #---------------------------------
+
+        # select.select basicamente le pregunta al sistema cuando un socket este listo para hacer algo
+        sockets_listos, _, excepciones = select.select(clientes, [], clientes)
+#        ↑               ↑               ↑
+#        |               |               └── Lista de sockets con errores o estados excepcionales.
+#        |               └────────────────── Lista de sockets "listos para escribir" (DESCARTADA).
+#        └────────────────────────────────── Lista de sockets "listos para leer" (incluye servidor y clientes).
+
+        #------------------------------------------------
+        # Manejo de conexiones nuevas y sockets listos
+        #------------------------------------------------
+
+        for sock in sockets_listos:
+            if sock == servidor: # Hay una nueva conexcion entrante
+                cliente_socket, direccion = servidor.accept()
+                # acepts acepta la conexion y se crea un nuevo socket exclusivo para este cliente (cliente socket) y se guarda su direccion IP en la variable direccion
+    
+                clientes.append(cliente_socket) # Agrega el nuevo sokect del cliente en la lista vacia de clientes
+                print(f"[+] Nuevo cliente conectado desde {direccion}")
